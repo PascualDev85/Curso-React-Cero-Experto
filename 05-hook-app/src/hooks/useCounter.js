@@ -18,12 +18,15 @@ export const useCounter = (initialValue = 10) => {
 
   // icrementar el valor según que valor quiera pasaerle
   const incrementBy = (value = 1) => {
-    setCounter(counter + value);
+    setCounter((counter) => counter + value);
   };
 
   // decremetar el valor según que valor quiera pasaerle
   const decrementBy = (value = 1) => {
-    setCounter(counter - value);
+    // setCounter(counter - value);
+
+    // para que pase el test
+    setCounter((counter) => counter - value);
   };
 
   return {

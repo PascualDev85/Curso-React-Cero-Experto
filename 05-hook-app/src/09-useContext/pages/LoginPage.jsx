@@ -11,9 +11,10 @@ export const LoginPage = () => {
       <h1>LoginPage</h1>
       <hr />
 
-      <pre>{JSON.stringify(user, null, 3)}</pre>
+      <pre aria-label="pre">{JSON.stringify(user, null, 3)}</pre>
 
       <button
+        aria-label="buttonSetUser"
         onClick={() =>
           setUser({ id: 123, name: "David", email: "david@gmail.com" })
         }
