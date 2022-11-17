@@ -1,0 +1,29 @@
+* {
+  font-family: "Roboto", sans-serif;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background-color: #0e0e11;
+}
+
+body .card {
+  background: #000000;
+  background: -webkit-gradient(linear, left top, left bottom, from(#000000), color-stop(0%, #000000), to(#383838));
+  background: linear-gradient(to bottom, #000000 0%, #000000 0%, #383838 100%);
+  color: white;
+  -webkit-box-shadow: 0 0 8px #3a3a3a;
+          box-shadow: 0 0 8px #3a3a3a;
+  border-radius: 10px;
+}
+
+body .card:hover {
+  -webkit-box-shadow: 0 0 8px white;
+          box-shadow: 0 0 8px white;
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+/*# sourceMappingURL=styles.css.map */
