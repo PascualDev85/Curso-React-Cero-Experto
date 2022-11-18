@@ -51,6 +51,7 @@ body {
   .navbar {
     box-shadow: 0 0px 5px rgb(255, 255, 255);
   }
+
   h2 {
     color: red;
     font-size: 4rem;
@@ -91,7 +92,7 @@ body {
     .cardContent {
       padding-left: 0;
       h5 {
-        font-size: 18.6px;
+        font-size: 18px;
         font-weight: 600;
         border-bottom: solid 1px;
         text-align: center;
@@ -104,11 +105,11 @@ body {
       }
       .pFappearance {
         font-size: 13px;
+        min-height: 44px;
       }
       a {
         display: flex;
         justify-content: center;
-        // margin-top: 25px;
         color: rgb(136, 136, 136);
         text-decoration: none;
         &:hover {
@@ -116,5 +117,94 @@ body {
         }
       }
     }
+  }
+  .heroDescription {
+    margin-top: 30px;
+    padding: 50px;
+    .list-group {
+      span {
+        padding-left: 5px;
+      }
+    }
+  }
+  .img-thumbnail {
+    border-radius: 10px;
+    background-color: none;
+    padding: 0;
+    border: none;
+    box-shadow: 1px 1px 40px 20px rgba(97, 97, 97, 0.63);
+  }
+}
+
+@media (min-width: 991px) and (max-width: 1199px) {
+  .heroDescription {
+    margin-top: 0 !important;
+    padding: 25px !important;
+    button {
+      margin-top: 20px !important;
+    }
+  }
+}
+
+@media (min-width: 576px) and (max-width: 990px) {
+  .contentUser {
+    margin-right: 30px;
+  }
+  .cardContent {
+    padding-left: 16px !important;
+    .cardList {
+      padding-bottom: 0 !important;
+    }
+  }
+  .contentHero {
+    flex-direction: column;
+    align-items: center;
+    .heroDescription {
+      margin-top: 20px;
+      padding: 10px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .container {
+    h2 {
+      font-size: 50px;
+      text-align: center;
+    }
+    .contentHereoList {
+      row-gap: 0 !important;
+      .cardContent {
+        padding-left: 16px !important;
+      }
+    }
+
+    .contentHero {
+      flex-direction: column;
+      align-items: center;
+      .heroDescription {
+        margin-top: 30px;
+        padding: 0px;
+        .list-group {
+          padding: 0 !important;
+        }
+        h4 {
+          margin-top: 15px;
+        }
+        button {
+          margin: 15px 0 15px 0 !important;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .partnerships {
+    margin: auto;
+  }
+  .contentUser {
+    position: absolute;
+    right: 18px;
+    top: 90px;
   }
 }

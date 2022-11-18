@@ -8,7 +8,7 @@ export const HeroCard = ({
   first_appearance,
   characters,
 }) => {
-  const heroImageUrl = `./assets/heroes/${id}.jpg`;
+  const heroImageUrl = `./public/heroes/${id}.jpg`;
 
   // const charactersByHero = <p>{characters}</p>;
 
@@ -23,7 +23,7 @@ export const HeroCard = ({
           </div>
 
           <div className="col-md-5 col-lg-6 cardContent">
-            <div className="card-body px-1">
+            <div className="card-body px-1 cardList">
               <h5 className="card-title">{superhero}</h5>
               <small>Alter ego</small>
               <p className="card-text">{alter_ego}</p>

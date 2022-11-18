@@ -32,7 +32,7 @@ describe("Pruebas en <Search />", () => {
     expect(input.value).toBe("batman");
 
     const img = screen.getByRole("img");
-    expect(img.src).toContain("/assets/heroes/dc-batman.jpg");
+    expect(img.src).toContain("/public/heroes/dc-batman.jpg");
 
     const alert = screen.getByLabelText("alert-danger");
     expect(alert.style.display).toBe("none");
