@@ -1,12 +1,14 @@
+// MIDDLEWARE
 // acciones que puedo hacer dispatch que son funciones asincronas
 
 import {
   singInWithGoogle,
   registerUserWithEmailPassword,
+  loginWithEmailPassword,
 } from "../../firebase/providers";
 import { checkingCredentials, logout, login } from "./";
 
-export const checkingAuthentication = (email, password) => {
+export const checkingAuthentication = () => {
   return async (dispatch) => {
     dispatch(checkingCredentials());
   };
@@ -45,10 +47,27 @@ export const startCreatinUserWithEmailPassword = ({
         displayName,
       });
     // console.log({ resp });
-    // dispatch del error si la función falla
-    if (!ok) return dispatch(logout(errorMessage));
+    // dispatch del error si la función falla (Ej: email ya registrado)
+    if (!ok) return dispatch(logout({ errorMessage }));
 
     // login
     dispatch(login({ uid, displayName, email, photoURL }));
+  };
+};
+
+export const startLoginWithEmailPassword = ({ email, password }) => {
+  return async (dispatch) => {
+    // checking
+    dispatch(checkingCredentials());
+
+    // login
+    const result = await loginWithEmailPassword({ email, password });
+    // console.log(result);
+
+    // dispatch del error
+    if (!result.ok) return dispatch(logout(result));
+
+    // //dispatch del login
+    dispatch(login(result));
   };
 };

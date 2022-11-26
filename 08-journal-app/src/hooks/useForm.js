@@ -11,7 +11,7 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
 
   // memorizar el valor que sólo debe cambiar si cambia el formState
   const isFormValid = useMemo(() => {
-    // iterar sobre las propiedades del formValidation. Si formValidtion en la propiedad  es diferente a null que salga
+    // iterar sobre las propiedades del formValidation. Si formValidtion en la propiedad  es diferente a null que se salga
     for (const formField of Object.keys(formValidation)) {
       if (formValidation[formField] !== null) return false;
     }

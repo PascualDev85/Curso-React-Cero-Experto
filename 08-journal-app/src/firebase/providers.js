@@ -3,6 +3,7 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   updateProfile,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
@@ -12,13 +13,13 @@ const googleProvider = new GoogleAuthProvider();
 export const singInWithGoogle = async () => {
   try {
     // página firebase
-    const result = await signInWithPopup(FirebaseAuth, googleProvider);
+    const resp = await signInWithPopup(FirebaseAuth, googleProvider);
 
     // vereficar las credenciales de google a través de un token
     // const credentials = GoogleAuthProvider.credentialFromResult(result);
     // console.log(credentials);
 
-    const { displayName, email, photoURL, uid } = result.user;
+    const { displayName, email, photoURL, uid } = resp.user;
     // console.log(user);
 
     return {
@@ -30,7 +31,6 @@ export const singInWithGoogle = async () => {
       uid,
     };
   } catch (error) {
-    const errorCode = error.code;
     const errorMessage = error.message;
 
     return {
@@ -46,7 +46,7 @@ export const registerUserWithEmailPassword = async ({
   displayName,
 }) => {
   try {
-    console.log({ email, password, displayName });
+    // console.log({ email, password, displayName });
     const resp = await createUserWithEmailAndPassword(
       FirebaseAuth,
       email,
@@ -68,9 +68,38 @@ export const registerUserWithEmailPassword = async ({
     };
   } catch (error) {
     console.log(error);
+
+    if (error.message.includes("email-already-in-use")) {
+      return {
+        ok: false,
+        errorMessage: "The email address is already registered",
+      };
+    }
+  }
+};
+
+export const loginWithEmailPassword = async ({ email, password }) => {
+  try {
+    const resp = await signInWithEmailAndPassword(
+      FirebaseAuth,
+      email,
+      password
+    );
+    // console.log(result);
+
+    const { uid, displayName, photoURL } = resp.user;
+
+    return {
+      ok: true,
+      uid,
+      displayName,
+      email,
+      photoURL,
+    };
+  } catch (error) {
     return {
       ok: false,
-      errorMessage: error.message,
+      errorMessage: "Email or password incorrect",
     };
   }
 };
