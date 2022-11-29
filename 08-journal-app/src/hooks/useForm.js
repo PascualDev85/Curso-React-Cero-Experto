@@ -9,6 +9,11 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     createValidators();
   }, [formState]);
 
+  // este useEffect es para cuando initialForm se disparé el efecto (Notas)
+  useEffect(() => {
+    setFormState(initialForm);
+  }, [initialForm]);
+
   // memorizar el valor que sólo debe cambiar si cambia el formState
   const isFormValid = useMemo(() => {
     // iterar sobre las propiedades del formValidation. Si formValidtion en la propiedad  es diferente a null que se salga

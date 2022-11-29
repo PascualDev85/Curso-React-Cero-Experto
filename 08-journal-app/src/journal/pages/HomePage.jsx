@@ -1,9 +1,24 @@
+import { useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { AddOutlined } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
+
+import { startNewNote } from "../../store/journal";
 import { HomeLayout } from "../layout/HomeLayout";
 import { NoteView, NothingSelectedView } from "../views";
 
 export const HomePage = () => {
+  const { isSaving, activeNote: note } = useSelector((state) => state.journal);
+
+  const dispatch = useDispatch();
+
+  // const isSavingNewNote = useMemo
+
+  const onClickNewNote = () => {
+    dispatch(startNewNote());
+  };
+
   return (
     <HomeLayout>
       {/* <Typography>
@@ -12,13 +27,18 @@ export const HomePage = () => {
         ratione, ut placeat! Alias, unde eum nostrum ipsum rerum illum nemo!
       </Typography> */}
 
+      {/* al ser un objeto hay que preguntar para convertirlo en booleano  */}
+      {!!note ? <NoteView /> : <NothingSelectedView />}
+
       {/* NothingSelected */}
-      <NothingSelectedView />
+      {/* <NothingSelectedView /> */}
 
       {/* NoteView */}
       {/* <NoteView /> */}
 
       <IconButton
+        disabled={isSaving}
+        onClick={onClickNewNote}
         size="large"
         sx={{
           color: "white",

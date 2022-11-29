@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 import { FirebaseAuth } from "../firebase/config";
 import { login, logout } from "../store/auth";
+import { startLoadingNotes } from "../store/journal";
 
 export const useCheckAuth = () => {
   // mostrar un spinner cuando se está checking el status del usuario
@@ -21,7 +22,9 @@ export const useCheckAuth = () => {
 
       // si hay un usuario llamo al login
       const { uid, email, displayName, photoURL } = user;
-      dispatch(login(uid, email, displayName, photoURL));
+      dispatch(login({ uid, email, displayName, photoURL }));
+      // cargar una nota
+      dispatch(startLoadingNotes());
     });
   }, []);
 
