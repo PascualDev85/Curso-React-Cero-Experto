@@ -50,7 +50,24 @@ export const journalSlice = createSlice({
       //Mostrar mensaje de actualización (actualizar el título de la nota)
       state.messageSaved = `${action.payload.title} updated correctly`;
     },
-    deleteNoteById: (state, action) => {},
+    setPhotosToActiveNote: (state, action) => {
+      // tenemos el arreglo de las anteriores imgs si las hubiera y construimos un nuevo arreglo con las nuevas imgs persevando las anteriores si hubiera
+      state.activeNote.imageUrls = [
+        ...state.activeNote.imageUrls,
+        ...action.payload,
+      ];
+      state.isSaving = false;
+    },
+    clearNotesLogout: (state) => {
+      state.isSaving = false;
+      state.messageSaved = "";
+      state.notes = [];
+      state.activeNote = null;
+    },
+    deleteNoteById: (state, action) => {
+      state.activeNote = null;
+      state.notes = state.notes.filter((note) => note.id !== action.payload);
+    },
   },
 });
 
@@ -63,4 +80,6 @@ export const {
   updateNote,
   deleteNoteById,
   savingNewNote,
+  setPhotosToActiveNote,
+  clearNotesLogout,
 } = journalSlice.actions;

@@ -1,4 +1,4 @@
-import { collection, doc, setDoc } from "firebase/firestore/lite";
+import { collection, deleteDoc, doc, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../firebase/config";
 import {
   addNewEmptyNote,
@@ -7,8 +7,10 @@ import {
   setNotes,
   setSaving,
   updateNote,
+  setPhotosToActiveNote,
+  deleteNoteById,
 } from "./";
-import { loadNotes } from "../../helpers/loadNotes";
+import { loadNotes, fileUpload } from "../../helpers/";
 
 export const startNewNote = () => {
   return async (dispatch, getState) => {
@@ -26,6 +28,7 @@ export const startNewNote = () => {
       title: "",
       body: "",
       date: new Date().getTime(),
+      imageUrls: [],
     };
 
     // colección de notas en Firebase
@@ -78,5 +81,42 @@ export const startSaveNote = () => {
 
     // actualizamos la note
     dispatch(updateNote(activeNote));
+  };
+};
+
+export const startUploadingFiles = (files = []) => {
+  return async (dispatch) => {
+    dispatch(setSaving());
+    // console.log(files);
+
+    // subir las imágenes a Cloudinary
+    // await fileUpload(files[0]); esto subiría 1 img
+
+    // disparar funciones que regresan promesas o no y cuando todas son resultas entonces tendré la resp
+    const fileUploadPromises = [];
+    for (const file of files) {
+      // crear el arreglo de promesas
+      fileUploadPromises.push(fileUpload(file));
+    }
+    // arreglo de promesas o callbacks
+    const pohotosUrls = await Promise.all(fileUploadPromises);
+    console.log(pohotosUrls);
+
+    dispatch(setPhotosToActiveNote(pohotosUrls));
+  };
+};
+
+export const startDeletingNote = () => {
+  return async (dispatch, getState) => {
+    const { uid } = getState().auth;
+    const { activeNote } = getState().journal;
+    console.log({ uid, activeNote });
+
+    // borrar la nota de Firebase
+    const docRef = doc(FirebaseDB, `${uid}/journal/notes/${activeNote.id}`);
+    await deleteDoc(docRef);
+
+    // borrar la nota del state
+    dispatch(deleteNoteById(activeNote.id));
   };
 };

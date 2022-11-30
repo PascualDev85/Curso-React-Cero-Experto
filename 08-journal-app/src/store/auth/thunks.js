@@ -7,6 +7,7 @@ import {
   loginWithEmailPassword,
   logoutFireBase,
 } from "../../firebase/providers";
+import { clearNotesLogout } from "../journal";
 import { checkingCredentials, logout, login } from "./";
 
 export const checkingAuthentication = () => {
@@ -77,7 +78,10 @@ export const startLogout = () => {
   return async (dispatch) => {
     // logout
     await logoutFireBase();
+
+    dispatch(clearNotesLogout());
+
     // dispatch del logout, mandamos un objeto vacío
-    dispatch(logout({}));
+    dispatch(logout());
   };
 };
