@@ -1,5 +1,7 @@
 export const fileUpload = async (file) => {
-  if (!file) throw new Error("No file selected");
+  // if (!file) throw new Error("No file selected");
+
+  if (!file) return null;
 
   const cloudURL = "https://api.cloudinary.com/v1_1/dxyutuzu3/upload";
 

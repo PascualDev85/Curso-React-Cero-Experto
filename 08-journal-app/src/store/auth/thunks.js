@@ -23,7 +23,7 @@ export const startGoogleSignIn = () => {
 
     // login
     const result = await singInWithGoogle();
-    // console.log({result});
+    console.log({ result });
     // dispatch del error
     if (!result.ok) return dispatch(logout(result.errorMessage));
 
@@ -53,7 +53,7 @@ export const startCreatinUserWithEmailPassword = ({
     if (!ok) return dispatch(logout({ errorMessage }));
 
     // login
-    dispatch(login({ uid, displayName, email, photoURL }));
+    dispatch(login({ uid, displayName, ok, email, photoURL }));
   };
 };
 
