@@ -47,7 +47,7 @@ export const LoginPage = () => {
   };
 
   const onGoogleSignIn = () => {
-    // console.log("Google Sign In");
+    console.log("Google Sign In");
 
     dispatch(startGoogleSignIn());
   };
@@ -55,6 +55,7 @@ export const LoginPage = () => {
   return (
     <AuthLayout title="Login">
       <form
+        aria-label="submit-form"
         onSubmit={onSubmit}
         className="animate__animated animate__fadeIn animated__faster"
       >
@@ -77,6 +78,9 @@ export const LoginPage = () => {
               placeholder="Password"
               fullWidth
               name="password"
+              inputProps={{
+                "data-testid": "password",
+              }}
               value={password}
               onChange={onInputChange}
             />
@@ -101,6 +105,7 @@ export const LoginPage = () => {
                 disabled={isAuthenticating}
                 onClick={onGoogleSignIn}
                 variant="contained"
+                aria-label="google-btn"
                 sx={{ padding: 2 }}
                 fullWidth
               >
