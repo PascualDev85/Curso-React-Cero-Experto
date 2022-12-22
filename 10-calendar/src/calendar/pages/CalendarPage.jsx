@@ -1,40 +1,57 @@
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-import { addHours } from "date-fns";
-import { CalendarEventBox, Navbar } from "../";
+// import { addHours } from "date-fns";
+import {
+  CalendarEventBox,
+  CalendarModal,
+  FabAddNew,
+  FabDelete,
+  Navbar,
+} from "../";
 
 import { localizer, getMessagesES } from "../../helpers";
-import { useEventStyleCalendar } from "../../hooks";
+import {
+  useCalendarStore,
+  useEventStyleCalendar,
+  useUiStore,
+} from "../../hooks";
 import { useState } from "react";
 
-const myEventsList = [
-  {
-    title: "Cumple de David",
-    notes: "Comprar la tarta",
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: "#fafafa",
-    user: {
-      _id: "123",
-      name: "David",
-    },
-  },
-];
+//* El evento creado por el usuario se guarda en el store
+// const myEventsList = [
+//   {
+//     title: "Cumple de David",
+//     notes: "Comprar la tarta",
+//     start: new Date(),
+//     end: addHours(new Date(), 2),
+//     bgColor: "#fafafa",
+//     user: {
+//       _id: "123",
+//       name: "David",
+//     },
+//   },
+// ];
 
 export const CalendarPage = () => {
+  // Importaciones de los customs hooks
+  const eventStyleGetter = () => useEventStyleCalendar();
+  const { openDateModal } = useUiStore();
+  const { events, setActiveEvent } = useCalendarStore();
+
+  // obtener el ultimo view del localstorage
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "week"
   );
 
-  const eventStyleGetter = () => useEventStyleCalendar();
-
   const onDoubleClick = (e) => {
-    console.log({ doubleClick: e });
+    // console.log({ doubleClick: e });
+    openDateModal();
   };
 
   const onSelect = (e) => {
-    console.log({ click: e });
+    // console.log({ click: e });
+    setActiveEvent(e);
   };
 
   const onViewChanged = (e) => {
@@ -49,7 +66,7 @@ export const CalendarPage = () => {
       <Calendar
         culture="es"
         localizer={localizer}
-        events={myEventsList}
+        events={events}
         defaultView={lastView}
         startAccessor="start"
         endAccessor="end"
@@ -63,6 +80,10 @@ export const CalendarPage = () => {
         onSelectEvent={onSelect}
         onView={onViewChanged}
       />
+
+      <CalendarModal />
+      <FabAddNew />
+      <FabDelete />
     </>
   );
 };
