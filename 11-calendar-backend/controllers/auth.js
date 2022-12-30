@@ -107,6 +107,7 @@ const renewToken = async (req, res = response) => {
   const { uid, name } = req;
 
   // Generar un nuevo JWT y retornarlo en esta petición
+  // Porque el token expira en 2 horas, y si el usuario está activo, se debe renovar el token.
   const token = await generarJWT(uid, name);
 
   res.json({
