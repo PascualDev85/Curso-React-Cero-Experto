@@ -29,15 +29,15 @@ export const useCalendarStore = () => {
     try {
       if (calendarEvent.id) {
         // actualizar evento ennviar el evento al backend
-        await calendarApi.delete(`/events/${calendarEvent.id}`, calendarEvent);
+        await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent);
         // actualizar evento haciendo un dispatch
         dispatch(onUpdateEvent({ ...calendarEvent, user }));
         return;
       }
       //Creando un nuevo evento
       // aqui se hace la petición al backend que está en el body
-      const { data } = await calendarApi.post("/events", calendarEvent);
-      console.log({ data });
+      await calendarApi.post("/events", calendarEvent);
+      // console.log({ data });
 
       dispatch(
         onAddNewEvent({
