@@ -36,7 +36,7 @@ export const useCalendarStore = () => {
       }
       //Creando un nuevo evento
       // aqui se hace la petición al backend que está en el body
-      await calendarApi.post("/events", calendarEvent);
+      const { data } = await calendarApi.post("/events", calendarEvent);
       // console.log({ data });
 
       dispatch(
