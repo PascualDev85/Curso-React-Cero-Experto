@@ -12,6 +12,7 @@ import {
 
 import { localizer, getMessagesES } from "../../helpers";
 import {
+  useAuthStore,
   useCalendarStore,
   useEventStyleCalendar,
   useUiStore,
@@ -35,14 +36,33 @@ import { useEffect, useState } from "react";
 
 export const CalendarPage = () => {
   // Importaciones de los customs hooks
-  const eventStyleGetter = () => useEventStyleCalendar();
+  const { user } = useAuthStore();
   const { openDateModal } = useUiStore();
-  const { events, setActiveEvent } = useCalendarStore();
+  const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
 
   // obtener el ultimo view del localstorage
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "week"
   );
+
+  const eventStyleGetter = (event, start, end, isSelect) => {
+    console.log(event);
+    // variable para saber si el evento es mio booleana
+    const isMyEvent =
+      user.uid === event.user._id || user.uid === event.user.uid;
+
+    const style = {
+      backgroundColor: isMyEvent ? "#367CF7" : "#465660",
+      borderRadius: "0px",
+      opacity: 0.9,
+      display: "block",
+      color: "white",
+    };
+
+    return {
+      style,
+    };
+  };
 
   const onDoubleClick = (e) => {
     // console.log({ doubleClick: e });
@@ -59,6 +79,11 @@ export const CalendarPage = () => {
     localStorage.setItem("lastView", e);
     setLastView(e);
   };
+
+  // controlar el evento de carga de la pagina de los eventos
+  useEffect(() => {
+    startLoadingEvents();
+  }, []);
 
   return (
     <>
