@@ -113,8 +113,8 @@ const renewToken = async (req, res = response) => {
   res.json({
     ok: true,
     // no es necesario enviar el uid y name, ya que se envía en el token
-    // uid,
-    // name,
+    uid,
+    name,
     token,
   });
 };
